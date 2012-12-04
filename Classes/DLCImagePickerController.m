@@ -122,7 +122,8 @@
     [self.imageView addSubview:self.blurOverlayScrollView];
     
     hasBlur = NO;
-    [self.blurToggleButton setSelected:NO];
+    
+    //[self.blurToggleButton setSelected:NO];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -460,7 +461,7 @@
     [self removeAllTargets];
     
     // reset blur
-    [self loadBlurOverlay];
+    //[self loadBlurOverlay];
     
     
     [stillCamera startCameraCapture];
@@ -593,7 +594,7 @@
             self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
             
             CGFloat radius = MIN(MAX(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
-            //NSLog(@"zoomScale is %f, excludeCircleRadius is %f", self.blurOverlayScrollView.zoomScale, gpu.excludeCircleRadius);
+            NSLog(@"zoomScale is %f, excludeCircleRadius is %f", self.blurOverlayScrollView.zoomScale, gpu.excludeCircleRadius);
             
             self.blurOverlayScrollView.zoomScale = sender.scale;
             [gpu setExcludeCircleRadius:radius];
