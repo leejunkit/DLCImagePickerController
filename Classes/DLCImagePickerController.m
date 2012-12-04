@@ -592,8 +592,8 @@
             CGFloat y = (self.blurOverlayScrollView.frame.size.height * self.blurOverlayScrollView.zoomScale) - midpoint.y;
             self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
             
-            CGFloat radius = MAX(MIN(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
-            //NSLog(@"zoomScale is %f, sender.scale is %f", self.blurOverlayScrollView.zoomScale, sender.scale);
+            CGFloat radius = MIN(MAX(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
+            //NSLog(@"zoomScale is %f, excludeCircleRadius is %f", self.blurOverlayScrollView.zoomScale, gpu.excludeCircleRadius);
             
             self.blurOverlayScrollView.zoomScale = sender.scale;
             [gpu setExcludeCircleRadius:radius];
