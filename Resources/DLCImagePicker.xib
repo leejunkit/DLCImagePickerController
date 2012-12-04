@@ -45,6 +45,7 @@
 						<int key="NSvFlags">301</int>
 						<string key="NSFrame">{{0, 78}, {320, 320}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="156513520"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="950787088">
@@ -60,6 +61,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{-12, 435}, {344, 75}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="263777331"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -74,6 +76,7 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{0, 437}, {320, 75}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="31350387"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -92,6 +95,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{115, 3}, {90, 37}}</string>
 								<reference key="NSSuperview" ref="31350387"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="853672149"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -133,6 +137,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{263, 3}, {65, 37}}</string>
 								<reference key="NSSuperview" ref="31350387"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -168,6 +173,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{-8, 3}, {65, 37}}</string>
 								<reference key="NSSuperview" ref="31350387"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="73278669"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -194,6 +200,7 @@
 								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{11, 7}, {71, 29}}</string>
 								<reference key="NSSuperview" ref="31350387"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="458960915"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -221,6 +228,7 @@
 						</array>
 						<string key="NSFrame">{{0, 437}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="3975694"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -234,6 +242,7 @@
 						<int key="NSvFlags">290</int>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="187956305"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -247,6 +256,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{277, 3}, {40, 37}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="780689577"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -272,6 +282,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{136, 3}, {50, 41}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="132217247"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -297,6 +308,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{213, 0}, {44, 44}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="17104341"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -326,6 +338,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{57, 0}, {44, 44}}</string>
 						<reference key="NSSuperview" ref="430809117"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="328503754"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -353,6 +366,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="588006416"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="950787088"/>
@@ -480,16 +494,6 @@
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="780689577"/>
-						<reference key="destination" ref="764651516"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="780689577"/>
 						<reference key="destination" ref="534410991"/>
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
@@ -505,6 +509,16 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">90</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
+						<string key="label">gestureRecognizers</string>
+						<reference key="source" ref="780689577"/>
+						<reference key="destination" ref="764651516"/>
+						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
+						<bool key="addsContentToExistingCollection">YES</bool>
+					</object>
+					<int key="connectionID">92</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -557,7 +571,7 @@
 						<reference key="source" ref="764651516"/>
 						<reference key="destination" ref="841351856"/>
 					</object>
-					<int key="connectionID">63</int>
+					<int key="connectionID">93</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -758,9 +772,151 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">91</int>
+			<int key="maxID">93</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DLCImagePickerController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cancel:">id</string>
+						<string key="handlePan:">UIGestureRecognizer</string>
+						<string key="handlePinch:">UIPinchGestureRecognizer</string>
+						<string key="handleTapToFocus:">UITapGestureRecognizer</string>
+						<string key="retakePhoto:">UIButton</string>
+						<string key="switchToLibrary:">id</string>
+						<string key="takePhoto:">id</string>
+						<string key="toggleBlur:">UIButton</string>
+						<string key="toggleFilters:">UIButton</string>
+						<string key="toggleFlash:">UIButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cancel:">
+							<string key="name">cancel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="handlePan:">
+							<string key="name">handlePan:</string>
+							<string key="candidateClassName">UIGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="handlePinch:">
+							<string key="name">handlePinch:</string>
+							<string key="candidateClassName">UIPinchGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="handleTapToFocus:">
+							<string key="name">handleTapToFocus:</string>
+							<string key="candidateClassName">UITapGestureRecognizer</string>
+						</object>
+						<object class="IBActionInfo" key="retakePhoto:">
+							<string key="name">retakePhoto:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBActionInfo" key="switchToLibrary:">
+							<string key="name">switchToLibrary:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="takePhoto:">
+							<string key="name">takePhoto:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleBlur:">
+							<string key="name">toggleBlur:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBActionInfo" key="toggleFilters:">
+							<string key="name">toggleFilters:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBActionInfo" key="toggleFlash:">
+							<string key="name">toggleFlash:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="blurToggleButton">UIButton</string>
+						<string key="cameraToggleButton">UIButton</string>
+						<string key="cancelButton">UIButton</string>
+						<string key="filterScrollView">UIScrollView</string>
+						<string key="filtersBackgroundImageView">UIImageView</string>
+						<string key="filtersToggleButton">UIButton</string>
+						<string key="flashToggleButton">UIButton</string>
+						<string key="imageView">GPUImageView</string>
+						<string key="libraryToggleButton">UIButton</string>
+						<string key="photoBar">UIView</string>
+						<string key="photoCaptureButton">UIButton</string>
+						<string key="retakeButton">UIButton</string>
+						<string key="topBar">UIView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="blurToggleButton">
+							<string key="name">blurToggleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cameraToggleButton">
+							<string key="name">cameraToggleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cancelButton">
+							<string key="name">cancelButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="filterScrollView">
+							<string key="name">filterScrollView</string>
+							<string key="candidateClassName">UIScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="filtersBackgroundImageView">
+							<string key="name">filtersBackgroundImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="filtersToggleButton">
+							<string key="name">filtersToggleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="flashToggleButton">
+							<string key="name">flashToggleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">GPUImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="libraryToggleButton">
+							<string key="name">libraryToggleButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="photoBar">
+							<string key="name">photoBar</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="photoCaptureButton">
+							<string key="name">photoCaptureButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="retakeButton">
+							<string key="name">retakeButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="topBar">
+							<string key="name">topBar</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DLCImagePickerController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">GPUImageView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/GPUImageView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

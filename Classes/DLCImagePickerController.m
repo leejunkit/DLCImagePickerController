@@ -10,6 +10,8 @@
 #import "GrayscaleContrastFilter.h"
 
 #define kStaticBlurSize 2.0f
+#define kInitialBlurRadius 80.0/320.0
+#define kMaxZoomScale 2.0f
 
 @implementation DLCImagePickerController {
     BOOL isStatic;
@@ -69,16 +71,34 @@
 	self.focusView.alpha = 0;
     
     /*** Set up the blurOverlayView and the UIScrollView that will hold the blurOverlayView ***/
+    [self loadBlurOverlay];
+    
+    [self loadFilters];
+    
+    //we need a crop filter for the live video
+    cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0f, 0.0f, 1.0f, 0.75f)];
+    
+    filter = [[GPUImageFilter alloc] init];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self setUpCamera];
+    });
+}
+
+-(void)loadBlurOverlay
+{
+    self.blurOverlayView = nil;
+    self.blurOverlayScrollView = nil;
     
     // Need to be twice as big as the frame because we are going to pan the entire UIView
     self.blurOverlayView = [[BlurOverlayView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                         self.imageView.frame.size.width * 2,
-                                                                         self.imageView.frame.size.height * 2)];
+                                                                             self.imageView.frame.size.width * 2,
+                                                                             self.imageView.frame.size.height * 2)];
     
     // Create the frame of the scroll view that is going to hold the blur overlay
     self.blurOverlayScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                             self.imageView.frame.size.width,
-                                                                             self.imageView.frame.size.height)];
+                                                                                self.imageView.frame.size.width,
+                                                                                self.imageView.frame.size.height)];
     
     // Make the content size as big as the size of the blur overlay
     self.blurOverlayScrollView.contentSize = CGSizeMake(self.imageView.frame.size.width * 2,
@@ -91,23 +111,18 @@
                                                            self.imageView.frame.size.height / 2);
     
     
+    // set the scrollview's delegate for zooming delegate methods
+    self.blurOverlayScrollView.delegate = self;
+    
+    // set zooming methods
+    self.blurOverlayScrollView.maximumZoomScale = kMaxZoomScale;
     
     
     self.blurOverlayScrollView.alpha = 0;
     [self.imageView addSubview:self.blurOverlayScrollView];
     
     hasBlur = NO;
-    
-    [self loadFilters];
-    
-    //we need a crop filter for the live video
-    cropFilter = [[GPUImageCropFilter alloc] initWithCropRegion:CGRectMake(0.0f, 0.0f, 1.0f, 0.75f)];
-    
-    filter = [[GPUImageFilter alloc] init];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self setUpCamera];
-    });
+    [self.blurToggleButton setSelected:NO];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -341,7 +356,7 @@
     } else {
         if (!blurFilter) {
             blurFilter = [[GPUImageGaussianSelectiveBlurFilter alloc] init];
-            [(GPUImageGaussianSelectiveBlurFilter*)blurFilter setExcludeCircleRadius:80.0/320.0];
+            [(GPUImageGaussianSelectiveBlurFilter*)blurFilter setExcludeCircleRadius:kInitialBlurRadius];
             [(GPUImageGaussianSelectiveBlurFilter*)blurFilter setExcludeCirclePoint:CGPointMake(0.5f, 0.5f)];
             [(GPUImageGaussianSelectiveBlurFilter*)blurFilter setBlurSize:kStaticBlurSize];
             [(GPUImageGaussianSelectiveBlurFilter*)blurFilter setAspectRatio:1.0f];
@@ -443,6 +458,11 @@
     staticPictureOriginalOrientation = UIImageOrientationUp;
     isStatic = NO;
     [self removeAllTargets];
+    
+    // reset blur
+    [self loadBlurOverlay];
+    
+    
     [stillCamera startCameraCapture];
     [self.cameraToggleButton setEnabled:YES];
     
@@ -540,6 +560,15 @@
 	}
 }
 
+#pragma mark UIScrollView delegate methods
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.blurOverlayView;
+}
+
+
+
 -(IBAction) handlePinch:(UIPinchGestureRecognizer *) sender {
     if (hasBlur) {
         CGPoint midpoint = [sender locationInView:imageView];
@@ -557,11 +586,17 @@
         if ([sender state] == UIGestureRecognizerStateBegan || [sender state] == UIGestureRecognizerStateChanged) {
             [gpu setBlurSize:0.0f];
             [gpu setExcludeCirclePoint:CGPointMake(midpoint.x/320.0f, midpoint.y/320.0f)];
-            self.blurOverlayView.circleCenter = CGPointMake(midpoint.x, midpoint.y);
-            CGFloat radius = MAX(MIN(sender.scale*[gpu excludeCircleRadius], 0.6f), 0.15f);
-            self.blurOverlayView.radius = radius*320.f;
+            
+            // calculate the contentOffset to pass to the scrollview from tap coords
+            CGFloat x = (self.blurOverlayScrollView.frame.size.width * self.blurOverlayScrollView.zoomScale) - midpoint.x;
+            CGFloat y = (self.blurOverlayScrollView.frame.size.height * self.blurOverlayScrollView.zoomScale) - midpoint.y;
+            self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
+            
+            CGFloat radius = MAX(MIN(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
+            //NSLog(@"zoomScale is %f, sender.scale is %f", self.blurOverlayScrollView.zoomScale, sender.scale);
+            
+            self.blurOverlayScrollView.zoomScale = sender.scale;
             [gpu setExcludeCircleRadius:radius];
-            sender.scale = 1.0f;
         }
         
         if ([sender state] == UIGestureRecognizerStateEnded) {

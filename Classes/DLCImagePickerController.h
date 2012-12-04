@@ -18,7 +18,9 @@
 - (void)imagePickerControllerDidCancel:(DLCImagePickerController *)picker;
 @end
 
-@interface DLCImagePickerController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
+@interface DLCImagePickerController : UIViewController <UINavigationControllerDelegate,
+                                                        UIImagePickerControllerDelegate,
+                                                        UIScrollViewDelegate> {
     GPUImageStillCamera *stillCamera;
     GPUImageOutput<GPUImageInput> *filter;
     GPUImageOutput<GPUImageInput> *blurFilter;
