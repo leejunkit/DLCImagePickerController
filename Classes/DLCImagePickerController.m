@@ -524,6 +524,46 @@
     }
 }
 
+-(IBAction) handlePinch:(UIPinchGestureRecognizer *) sender {
+    if (hasBlur) {
+        CGPoint midpoint = [sender locationInView:imageView];
+        GPUImageGaussianSelectiveBlurFilter* gpu =
+        (GPUImageGaussianSelectiveBlurFilter*)blurFilter;
+        
+        if ([sender state] == UIGestureRecognizerStateBegan) {
+            [self showBlurOverlay:YES];
+            [gpu setBlurSize:0.0f];
+            if (isStatic) {
+                [staticPicture processImage];
+            }
+        }
+        
+        if ([sender state] == UIGestureRecognizerStateBegan || [sender state] == UIGestureRecognizerStateChanged) {
+            [gpu setBlurSize:0.0f];
+            [gpu setExcludeCirclePoint:CGPointMake(midpoint.x/320.0f, midpoint.y/320.0f)];
+            
+            // calculate the contentOffset to pass to the scrollview from tap coords
+            CGFloat x = (self.blurOverlayScrollView.frame.size.width * self.blurOverlayScrollView.zoomScale) - midpoint.x;
+            CGFloat y = (self.blurOverlayScrollView.frame.size.height * self.blurOverlayScrollView.zoomScale) - midpoint.y;
+            self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
+            
+            CGFloat radius = MIN(MAX(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
+            //NSLog(@"zoomScale is %f, excludeCircleRadius is %f", self.blurOverlayScrollView.zoomScale, gpu.excludeCircleRadius);
+            
+            self.blurOverlayScrollView.zoomScale = sender.scale;
+            [gpu setExcludeCircleRadius:radius];
+        }
+        
+        if ([sender state] == UIGestureRecognizerStateEnded) {
+            [gpu setBlurSize:kStaticBlurSize];
+            [self showBlurOverlay:NO];
+            if (isStatic) {
+                [staticPicture processImage];
+            }
+        }
+    }
+}
+
 - (IBAction) handleTapToFocus:(UITapGestureRecognizer *)tgr{
 	if (!isStatic && tgr.state == UIGestureRecognizerStateRecognized) {
 		CGPoint location = [tgr locationInView:self.imageView];
@@ -566,48 +606,6 @@
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.blurOverlayView;
-}
-
-
-
--(IBAction) handlePinch:(UIPinchGestureRecognizer *) sender {
-    if (hasBlur) {
-        CGPoint midpoint = [sender locationInView:imageView];
-        GPUImageGaussianSelectiveBlurFilter* gpu =
-            (GPUImageGaussianSelectiveBlurFilter*)blurFilter;
-        
-        if ([sender state] == UIGestureRecognizerStateBegan) {
-            [self showBlurOverlay:YES];
-            [gpu setBlurSize:0.0f];
-            if (isStatic) {
-                [staticPicture processImage];
-            }
-        }
-        
-        if ([sender state] == UIGestureRecognizerStateBegan || [sender state] == UIGestureRecognizerStateChanged) {
-            [gpu setBlurSize:0.0f];
-            [gpu setExcludeCirclePoint:CGPointMake(midpoint.x/320.0f, midpoint.y/320.0f)];
-            
-            // calculate the contentOffset to pass to the scrollview from tap coords
-            CGFloat x = (self.blurOverlayScrollView.frame.size.width * self.blurOverlayScrollView.zoomScale) - midpoint.x;
-            CGFloat y = (self.blurOverlayScrollView.frame.size.height * self.blurOverlayScrollView.zoomScale) - midpoint.y;
-            self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
-            
-            CGFloat radius = MIN(MAX(sender.scale*kInitialBlurRadius, kInitialBlurRadius), kMaxZoomScale * kInitialBlurRadius);
-            NSLog(@"zoomScale is %f, excludeCircleRadius is %f", self.blurOverlayScrollView.zoomScale, gpu.excludeCircleRadius);
-            
-            self.blurOverlayScrollView.zoomScale = sender.scale;
-            [gpu setExcludeCircleRadius:radius];
-        }
-        
-        if ([sender state] == UIGestureRecognizerStateEnded) {
-            [gpu setBlurSize:kStaticBlurSize];
-            [self showBlurOverlay:NO];
-            if (isStatic) {
-                [staticPicture processImage];
-            }
-        }
-    }
 }
 
 -(void) showFilters {
