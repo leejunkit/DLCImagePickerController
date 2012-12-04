@@ -32,7 +32,9 @@
     photoBar,
     topBar,
     blurOverlayView,
-    outputJPEGQuality;
+    blurOverlayScrollView,
+    outputJPEGQuality,
+    clearImageView;
 
 -(id) init {
     self = [super initWithNibName:@"DLCImagePicker" bundle:nil];
@@ -66,12 +68,33 @@
 	[self.view addSubview:self.focusView];
 	self.focusView.alpha = 0;
     
+    /*** Set up the blurOverlayView and the UIScrollView that will hold the blurOverlayView ***/
     
+    // Need to be twice as big as the frame because we are going to pan the entire UIView
     self.blurOverlayView = [[BlurOverlayView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                         self.imageView.frame.size.width,
-                                                                         self.imageView.frame.size.height)];
-    self.blurOverlayView.alpha = 0;
-    [self.imageView addSubview:self.blurOverlayView];
+                                                                         self.imageView.frame.size.width * 2,
+                                                                         self.imageView.frame.size.height * 2)];
+    
+    // Create the frame of the scroll view that is going to hold the blur overlay
+    self.blurOverlayScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                             self.imageView.frame.size.width,
+                                                                             self.imageView.frame.size.height)];
+    
+    // Make the content size as big as the size of the blur overlay
+    self.blurOverlayScrollView.contentSize = CGSizeMake(self.imageView.frame.size.width * 2,
+                                                        self.imageView.frame.size.height * 2);
+    
+    [self.blurOverlayScrollView addSubview:self.blurOverlayView];
+    
+    // Position the offset so the radial blur is right in the center of the scrollview's viewport
+    self.blurOverlayScrollView.contentOffset = CGPointMake(self.imageView.frame.size.width / 2,
+                                                           self.imageView.frame.size.height / 2);
+    
+    
+    
+    
+    self.blurOverlayScrollView.alpha = 0;
+    [self.imageView addSubview:self.blurOverlayScrollView];
     
     hasBlur = NO;
     
@@ -460,7 +483,13 @@
         
         if ([sender state] == UIGestureRecognizerStateBegan || [sender state] == UIGestureRecognizerStateChanged) {
             [gpu setBlurSize:0.0f];
-            [self.blurOverlayView setCircleCenter:tapPoint];
+            //[self.blurOverlayView setCircleCenter:tapPoint];
+            
+            // calculate the contentOffset to pass to the scrollview from tap coords
+            CGFloat x = (self.blurOverlayScrollView.frame.size.width * self.blurOverlayScrollView.zoomScale) - tapPoint.x;
+            CGFloat y = (self.blurOverlayScrollView.frame.size.height * self.blurOverlayScrollView.zoomScale) - tapPoint.y;
+            self.blurOverlayScrollView.contentOffset = CGPointMake(x, y);
+            
             [gpu setExcludeCirclePoint:CGPointMake(tapPoint.x/320.0f, tapPoint.y/320.0f)];
         }
         
@@ -610,13 +639,13 @@
 -(void) showBlurOverlay:(BOOL)show{
     if(show){
         [UIView animateWithDuration:0.2 delay:0 options:0 animations:^{
-            self.blurOverlayView.alpha = 0.6;
+            self.blurOverlayScrollView.alpha = 0.6;
         } completion:^(BOOL finished) {
             
         }];
     }else{
         [UIView animateWithDuration:0.35 delay:0.2 options:0 animations:^{
-            self.blurOverlayView.alpha = 0;
+            self.blurOverlayScrollView.alpha = 0;
         } completion:^(BOOL finished) {
             
         }];
@@ -626,10 +655,10 @@
 
 -(void) flashBlurOverlay {
     [UIView animateWithDuration:0.2 delay:0 options:0 animations:^{
-        self.blurOverlayView.alpha = 0.6;
+        self.blurOverlayScrollView.alpha = 0.6;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.35 delay:0.2 options:0 animations:^{
-            self.blurOverlayView.alpha = 0;
+            self.blurOverlayScrollView.alpha = 0;
         } completion:^(BOOL finished) {
             
         }];

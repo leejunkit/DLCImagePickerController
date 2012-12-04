@@ -44,9 +44,13 @@
 @property (nonatomic, weak) IBOutlet UIImageView *filtersBackgroundImageView;
 @property (nonatomic, weak) IBOutlet UIView *photoBar;
 @property (nonatomic, weak) IBOutlet UIView *topBar;
+
 @property (nonatomic, strong) BlurOverlayView *blurOverlayView;
+@property (nonatomic, strong) UIScrollView *blurOverlayScrollView;
 @property (nonatomic, strong) UIImageView *focusView;
 
 @property (nonatomic, assign) CGFloat outputJPEGQuality;
+
+@property (nonatomic, strong) UIImageView *clearImageView;
 
 @end
